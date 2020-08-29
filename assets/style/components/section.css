@@ -75,6 +75,7 @@ section .title {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 2rem;
 
     font-size: 1.8rem;
@@ -170,39 +171,46 @@ section .row1 .mobile {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-wrap: wrap;
         gap: 15px;
     
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
-
-    section .tecnologias .hr {
-        margin: 20px 100px 20px 100px;
-    }
-
+    
     section .sobre .content {
         margin: 0 50px 0 50px;
     }
 
+    section .sobre .content .hr {
+        margin: 20px 50px 20px 50px;
+    }
+    
     section .sobre .content #title {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1.4rem;
+        flex-wrap: wrap;
+        gap: 15px;
     }
-
+    
     section .sobre .img {
-        width: 350px;
-        height: 300px;
+        max-width: 250px;
+        min-width: 150px;
+        margin-bottom: 40px;
     }
-
+    
     section .sobre .img > img {
         width: 100%;
         height: 100%;
     }
-
+    
     section .tecnologias .tec-row1 {
         padding: 0 50px 0 50px;
         gap: 40px;
+    }
+    
+    section .tecnologias .hr {
+        margin: 20px 100px 20px 100px;
     }
 
     section .tecnologias .tec-row1 .img {
