@@ -1,0 +1,51 @@
+.anime {
+    opacity: 0;
+    transform: translate3d(-100px, 0, 0);
+    transition: .8s;
+}
+
+.anime-start {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.scroll-inicio {
+    background-color: rgba(39, 38, 38, 0);
+}
+
+.scroll-header {
+    background-color: rgba(39, 38, 38, 0.479);
+}
+
+.scroll-content {
+    background-color: rgba(39, 38, 38, 0.9);
+}
+
+.FAB {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    background-color: var(--yellow);
+    border-radius: 100%;
+
+    box-shadow: 0 0 20px var(--yellow), 0 0 15px rgb(87, 87, 1);
+}
+
+.FAB:hover {
+    background-color: rgb(240, 198, 11);
+}
+
+.FAB-start {
+    display: flex;
+}
+
+.fa-chevron-up {
+    font-size: 1.2rem;
+    color: var(--black);
+}

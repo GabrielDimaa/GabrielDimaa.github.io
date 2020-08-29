@@ -1,0 +1,40 @@
+@import './components/nav.css';
+@import './components/header.css';
+@import './components/section.css';
+@import './components/footer.css';
+@import './anime.css';
+
+* {
+    font-family: 'Comfortaa', cursive;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    grid-template-rows: 80px 500px 1fr 400px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "nav"
+        "header"
+        "section"
+        "footer";
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        display: grid;
+    grid-template-rows: 80px 500px 1fr 600px;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "nav"
+        "header"
+        "section"
+        "footer";
+    }
+}

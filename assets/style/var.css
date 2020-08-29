@@ -1,0 +1,16 @@
+:root {
+    --alice: #f4faffff;
+    --emerald: #00cc66ff;
+    --darkBlue: #4F359B;
+    --yellow: #f9dc5cff;
+    --magenta: #9e4770ff;
+    --azure: #357dedff;
+    --black: rgb(29, 31, 30);
+    --silver: #ADA8B6;
+
+    --flamenco: 'Flamenco', cursive;
+    --playball: 'Playball', cursive;
+
+    --shadow-dark: 5px 5px #8f8d8d50;
+    --shadow-white: 5px 5px #f5f0f01f;
+}
