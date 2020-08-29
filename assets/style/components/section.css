@@ -216,4 +216,11 @@ section .row1 .mobile {
     section .tecnologias .tec-row1 .img {
         max-width: 100px;
     }
+
+    section .row1 .card {
+        max-width: 300px;
+        height: 300px;
+    
+        margin: 40px 0 40px 0;
+    }
 }
