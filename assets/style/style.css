@@ -28,7 +28,9 @@ body {
 
 @media screen and (max-width: 600px) {
     body {
-        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+
         display: grid;
         grid-template-rows: 80px 500px 1fr 600px;
         grid-template-columns: 1fr;
