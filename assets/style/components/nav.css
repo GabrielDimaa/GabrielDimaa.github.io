@@ -67,6 +67,7 @@ nav .menu a:hover {
     }
 
     nav .logo {
+        max-width: 110px;
         margin-left: 25px;
     }
 }
