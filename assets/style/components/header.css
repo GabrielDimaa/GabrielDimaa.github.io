@@ -1,5 +1,3 @@
-@import '../var.css';
-
 header {
     display: flex;
     flex-direction: column;

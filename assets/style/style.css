@@ -1,5 +1,6 @@
-@import './components/nav.css';
+@import '../var.css';
 @import './components/header.css';
+@import './components/nav.css';
 @import './components/section.css';
 @import './components/footer.css';
 @import './anime.css';
