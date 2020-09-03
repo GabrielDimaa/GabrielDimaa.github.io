@@ -1,3 +1,5 @@
+@import '../var.css';
+
 section {
     background-color: var(--alice);
 }
