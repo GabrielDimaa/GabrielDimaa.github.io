@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Casa térrea 136,48 m² — Tour 3D</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <style>
   html,body{margin:0;height:100%;overflow:hidden;background:#cfdbe4;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
   canvas{display:block}
@@ -44,6 +44,49 @@
   #timeLabel{min-width:150px;font-size:12px;color:#6b6b6b;line-height:1.25}
   #timeLabel b{display:block;font-size:18px;color:#1f1f1f}
   #err{position:fixed;left:10px;top:10px;right:10px;z-index:99;background:#fee;color:#900;padding:10px;font:12px monospace;white-space:pre-wrap;display:none}
+  /* ---- toque e telas pequenas */
+  body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+  canvas{touch-action:none}
+  #menuBtn{display:none}
+  .touchKeys{display:none}
+  body.touch .touchKeys{display:grid}
+  body.touch .deskKeys{display:none}
+  #joy{position:fixed;left:calc(22px + env(safe-area-inset-left));bottom:calc(22px + env(safe-area-inset-bottom));width:124px;height:124px;border-radius:50%;background:rgba(255,255,255,.16);border:2px solid rgba(255,255,255,.6);box-shadow:0 4px 18px rgba(0,0,0,.22);z-index:6;display:none;touch-action:none}
+  #joyKnob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:none}
+  #actBtn{position:fixed;right:calc(20px + env(safe-area-inset-right));bottom:calc(34px + env(safe-area-inset-bottom));z-index:6;display:none;max-width:160px;padding:14px 16px;border:0;border-radius:14px;background:rgba(47,58,51,.94);color:#fff;font:600 14px system-ui;box-shadow:0 4px 16px rgba(0,0,0,.25);touch-action:manipulation}
+  body.touch #joy{display:block}
+  body.touch.top #joy, body.touch.paused #joy{display:none}
+  @media (max-width: 820px), (max-height: 500px) {
+    #buttons{top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right));flex-direction:column;align-items:flex-end;z-index:21;max-height:calc(100vh - 20px);overflow:auto}
+    #menuBtn{display:block}
+    #buttons > :not(#menuBtn){display:none}
+    #buttons.open > :not(#menuBtn){display:flex}
+    #buttons.open > button:not(#menuBtn){display:block}
+    body.top #buttons > #btnTop{display:block}
+    #buttons button{padding:11px 14px}
+    #buttons .seg button{padding:9px 10px}
+    #hud{top:calc(10px + env(safe-area-inset-top));bottom:auto;left:calc(10px + env(safe-area-inset-left));padding:6px 10px;font-size:12px;max-width:52vw}
+    #hud b{font-size:13px}
+    #timeTicks{display:none}
+    #timeTrack{padding-bottom:0}
+    #timePanel{padding:8px 12px;gap:10px}
+    #timeLabel{min-width:0;font-size:11px}
+    #timeLabel b{font-size:15px}
+    .card{max-width:min(480px,92vw);max-height:86vh;overflow:auto;padding:20px 22px 22px}
+    h1{font-size:21px}
+    .lead{font-size:13.5px}
+    #toast{max-width:88vw;top:auto;bottom:calc(170px + env(safe-area-inset-bottom))}
+    #topHelp{bottom:auto;top:calc(64px + env(safe-area-inset-top));max-width:88vw;text-align:center}
+  }
+  @media (max-width: 820px) and (orientation: portrait) {
+    #hud small{display:none}
+    #timePanel{top:calc(72px + env(safe-area-inset-top));bottom:auto;left:10px;right:10px;width:auto;transform:none}
+    #topHelp{top:calc(128px + env(safe-area-inset-top))}
+  }
+  @media (max-height: 500px) and (orientation: landscape) {
+    #timePanel{left:calc(170px + env(safe-area-inset-left));right:calc(170px + env(safe-area-inset-right));width:auto;transform:none;bottom:calc(12px + env(safe-area-inset-bottom))}
+    #toast{bottom:auto;top:12px}
+  }
 </style>
 </head>
 <body>
@@ -52,7 +95,14 @@
     <div class="eyebrow" id="ovEyebrow">Tour 3D · escala real</div>
     <h1 id="ovTitle">Casa térrea · 136,48 m²</h1>
     <p class="lead" id="ovLead">Modelado a partir da planta baixa, dos cortes e das fachadas, com três versões de fachada e três estilos de decoração. Você começa na calçada, de frente para a casa, no fim de uma tarde de verão. Arraste a barra de horário para ir da manhã à noite.</p>
-    <div class="keys">
+    <div class="keys touchKeys">
+      <div><kbd>Joystick</kbd><span>andar (canto inferior esquerdo)</span></div>
+      <div><kbd>Arrastar</kbd><span>olhar em volta</span></div>
+      <div><kbd>Botão</kbd><span>abrir e fechar a porta mais próxima</span></div>
+      <div><kbd>Barra</kbd><span>mudar o horário do dia</span></div>
+      <div><kbd>Opções</kbd><span>fachada, estilo, luzes e vista de cima</span></div>
+    </div>
+    <div class="keys deskKeys">
       <div><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>andar</span></div>
       <div><kbd>Mouse</kbd><span>olhar em volta</span></div>
       <div><kbd>Shift</kbd><span>andar mais rápido</span></div>
@@ -68,6 +118,7 @@
   </div>
 </div>
 <div id="buttons">
+  <button id="menuBtn" aria-expanded="false">☰ Opções</button>
   <label class="seg" id="facadeBox"><span>Fachada</span><select id="facadeSel" aria-label="Versão da fachada"><option value="graf">Grafite</option><option value="mad">Madeira</option><option value="rip">Ripado</option></select></label>
   <div class="seg" id="styleSeg"><span>Estilo</span><button data-s="mod" class="on">Moderno</button><button data-s="esc">Escandinavo</button><button data-s="lux">Luxo aconchegante</button></div>
   <button id="btnTop">Vista de cima (V)</button>
@@ -85,6 +136,8 @@
   <div id="timeLabel"><b>18:15</b>fim de tarde · luz dourada</div>
 </div>
 <div id="cross"></div>
+<div id="joy" aria-label="Joystick para andar"><div id="joyKnob"></div></div>
+<button id="actBtn"></button>
 <div id="topHelp">Arraste para girar · botão direito para mover · roda para zoom · <b>duplo clique no piso</b> para andar até lá · <b>V</b> para voltar · Norte = fundos</div>
 <div id="err"></div>
 
@@ -121,6 +174,8 @@ const CW = FI + 2.80, CL = FI + 3.80; // teto ala íntima+E.G. (pé-direito 2,80
 const PW = 3.85, PL = 4.75;          // topo das platibandas (3,85 e 4,75 do terreno)
 
 // ---------------------------------------------------------------- renderer
+// celular / tablet: controles de toque e qualidade inicial mais leve
+const TOUCH0 = matchMedia('(hover: none) and (pointer: coarse)').matches;
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
 renderer.setSize(innerWidth, innerHeight);
@@ -1742,7 +1797,7 @@ scene.add(sky);
 const sun = new THREE.DirectionalLight('#ffe0bb', 4.2);
 sun.target.position.copy(sunTarget);
 sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.mapSize.setScalar(TOUCH0 ? 1024 : 2048);
 Object.assign(sun.shadow.camera, { left: -15, right: 15, top: 15, bottom: -15, near: 5, far: 140 });
 sun.shadow.camera.updateProjectionMatrix();
 sun.shadow.radius = 2; sun.shadow.bias = -0.0005; sun.shadow.normalBias = 0.03;
@@ -2050,16 +2105,21 @@ function collide(px, pz, feet) {
 }
 const keys = {};
 const _f = new THREE.Vector3();
+const joy = { id: null, x: 0, y: 0 };                    // joystick de toque: x = lado, y = frente/trás (−1 a 1)
 function move(dt) {
   camera.getWorldDirection(_f); _f.y = 0; _f.normalize();
   const rx = -_f.z, rz = _f.x;
-  let ix = 0, iz = 0;
-  if (keys.KeyW || keys.ArrowUp) { ix += _f.x; iz += _f.z; }
-  if (keys.KeyS || keys.ArrowDown) { ix -= _f.x; iz -= _f.z; }
-  if (keys.KeyD || keys.ArrowRight) { ix += rx; iz += rz; }
-  if (keys.KeyA || keys.ArrowLeft) { ix -= rx; iz -= rz; }
-  const l = Math.hypot(ix, iz), sp = (keys.ShiftLeft || keys.ShiftRight) ? 3.2 : 1.5;
-  if (l > 0) { ix = ix / l * sp; iz = iz / l * sp; }
+  // teclado: direção cheia; joystick: intensidade proporcional ao quanto o polegar se afasta do centro
+  let fw = 0, st = 0;
+  if (keys.KeyW || keys.ArrowUp) fw += 1;
+  if (keys.KeyS || keys.ArrowDown) fw -= 1;
+  if (keys.KeyD || keys.ArrowRight) st += 1;
+  if (keys.KeyA || keys.ArrowLeft) st -= 1;
+  let mag = Math.hypot(fw, st); if (mag > 0) { fw /= mag; st /= mag; mag = 1; }
+  const jm = Math.hypot(joy.x, joy.y);
+  if (joy.id !== null && jm > 0.12) { fw -= joy.y; st += joy.x; const n = Math.hypot(fw, st); if (n > 1e-6) { fw /= n; st /= n; } mag = Math.min(1, n); }
+  const sp = (keys.ShiftLeft || keys.ShiftRight) ? 3.2 : (joy.id !== null ? 2.0 : 1.5);
+  let ix = (_f.x * fw + rx * st) * sp * mag, iz = (_f.z * fw + rz * st) * sp * mag;
   const k = 1 - Math.exp(-dt * 10);
   player.vx += (ix - player.vx) * k; player.vz += (iz - player.vz) * k;
   const [nx, nz] = collide(player.x + player.vx * dt, player.z + player.vz * dt, player.feet);
@@ -2085,19 +2145,64 @@ function showPause() {
   overlay.style.display = 'flex';
 }
 // modo alternativo: se o navegador bloquear o travamento do mouse, olha-se arrastando
-let dragLook = false, dragging = false, lastPX = 0, lastPY = 0;
+// (no celular é sempre assim: um dedo arrasta para olhar e o outro usa o joystick)
+let dragLook = false, dragId = null, lastPX = 0, lastPY = 0, touchMode = false;
 const walking = () => mode === 'fp' && (controls.isLocked || (dragLook && overlay.style.display === 'none'));
-function startWalk() { if (dragLook) { overlay.style.display = 'none'; hint.style.display = 'none'; } else controls.lock(); }
+function startWalk() { if (dragLook) { overlay.style.display = 'none'; hint.style.display = 'none'; document.body.classList.remove('paused'); } else controls.lock(); }
+function enableTouch() {
+  if (touchMode) return;
+  touchMode = true; dragLook = true;
+  document.body.classList.add('touch');
+  topHelp.innerHTML = 'Arraste para girar · pinça para zoom · dois dedos para mover · <b>toque duas vezes no piso</b> para andar até lá · Norte = fundos';
+}
+overlay.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') enableTouch(); });
 overlay.addEventListener('click', () => { if (mode === 'top') setTop(false); else startWalk(); });
 renderer.domElement.addEventListener('click', () => { if (mode === 'fp' && !controls.isLocked && !dragLook) controls.lock(); });
-renderer.domElement.addEventListener('pointerdown', e => { if (mode === 'fp' && dragLook) { dragging = true; lastPX = e.clientX; lastPY = e.clientY; } });
-addEventListener('pointerup', () => { dragging = false; });
+renderer.domElement.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'touch') enableTouch();
+  if (mode === 'fp' && dragLook && dragId === null) { dragId = e.pointerId; lastPX = e.clientX; lastPY = e.clientY; }
+});
+const endDrag = e => { if (e.pointerId === dragId) dragId = null; };
+addEventListener('pointerup', endDrag); addEventListener('pointercancel', endDrag);
 addEventListener('pointermove', e => {
-  if (!dragging) return;
+  if (e.pointerId !== dragId) return;
+  const s = e.pointerType === 'touch' ? 0.0058 : 0.0045;
   const eu = new THREE.Euler().setFromQuaternion(camera.quaternion, 'YXZ');
-  eu.y -= (e.clientX - lastPX) * 0.0045; eu.x = clamp(eu.x - (e.clientY - lastPY) * 0.0045, -1.45, 1.45);
+  eu.y -= (e.clientX - lastPX) * s; eu.x = clamp(eu.x - (e.clientY - lastPY) * s, -1.45, 1.45);
   camera.quaternion.setFromEuler(eu); lastPX = e.clientX; lastPY = e.clientY;
 });
+// joystick virtual
+const joyEl = document.getElementById('joy'), joyKnob = document.getElementById('joyKnob');
+function joyMove(e) {
+  const r = joyEl.getBoundingClientRect(), R = r.width / 2 - 10;
+  let dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+  const d = Math.hypot(dx, dy); if (d > R) { dx *= R / d; dy *= R / d; }
+  joy.x = dx / R; joy.y = dy / R;
+  joyKnob.style.transform = `translate(${dx}px, ${dy}px)`;
+}
+joyEl.addEventListener('pointerdown', e => {
+  e.preventDefault(); e.stopPropagation();
+  if (joy.id !== null) return;
+  joy.id = e.pointerId; try { joyEl.setPointerCapture(e.pointerId); } catch { } joyMove(e);
+});
+joyEl.addEventListener('pointermove', e => { if (e.pointerId === joy.id) joyMove(e); });
+const joyEnd = e => { if (e.pointerId !== joy.id) return; joy.id = null; joy.x = joy.y = 0; joyKnob.style.transform = ''; };
+joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercancel', joyEnd); joyEl.addEventListener('lostpointercapture', joyEnd);
+// botão de porta (no lugar do aviso "E · abrir ...")
+const actBtn = document.getElementById('actBtn'); let actDoor = null, actTxt = '';
+actBtn.addEventListener('pointerdown', e => e.stopPropagation());
+actBtn.addEventListener('click', e => { e.stopPropagation(); if (actDoor) actDoor.target = actDoor.target > 0.5 ? 0 : 1; });
+function showDoorAction(d) {
+  actDoor = d;
+  const txt = d ? `${d.target > 0.5 ? 'Fechar' : 'Abrir'} ${d.name}` : '';
+  if (txt === actTxt) return;
+  actTxt = txt; actBtn.textContent = txt; actBtn.style.display = d ? 'block' : 'none';
+}
+// menu recolhível (telas pequenas)
+const menuBtn = document.getElementById('menuBtn'), buttonsEl = document.getElementById('buttons');
+menuBtn.addEventListener('click', e => { e.stopPropagation(); const o = buttonsEl.classList.toggle('open'); menuBtn.setAttribute('aria-expanded', o); menuBtn.textContent = o ? '✕ Fechar' : '☰ Opções'; });
+renderer.domElement.addEventListener('pointerdown', () => { if (buttonsEl.classList.contains('open')) menuBtn.click(); });
+if (TOUCH0) enableTouch();
 controls.addEventListener('lock', () => { overlay.style.display = 'none'; hint.style.display = 'none'; });
 controls.addEventListener('unlock', () => { if (mode === 'fp') showPause(); });
 document.addEventListener('pointerlockerror', () => {
@@ -2115,7 +2220,9 @@ function setTop(on) {
     topCam.position.set(13.5, 24, 17.5); orbit.target.set(12.5, 0, 6.2); orbit.update();
     btnTop.classList.add('on'); btnTop.textContent = 'Voltar a andar (V)';
     shadowDirty = true;
+    document.body.classList.add('top'); showDoorAction(null);
   } else {
+    document.body.classList.remove('top');
     mode = 'fp';
     roofGroup.visible = true; for (const g of Object.values(styleGroups)) g.userData.roof.visible = true;
     labels.visible = false; marker.visible = false;
@@ -2184,15 +2291,26 @@ addEventListener('keydown', e => {
 });
 addEventListener('keyup', e => { keys[e.code] = false; });
 addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
-renderer.domElement.addEventListener('dblclick', e => {
+// vista de cima: duplo clique (ou toque duplo) no piso leva o visitante até lá
+function teleportAt(cx, cy) {
   if (mode !== 'top') return;
-  const ndc = new THREE.Vector2(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  const ndc = new THREE.Vector2(cx / innerWidth * 2 - 1, -(cy / innerHeight) * 2 + 1);
   const rc = new THREE.Raycaster(); rc.setFromCamera(ndc, topCam);
   const h = rc.intersectObjects(floorMeshes, false)[0];
   if (!h) return;
   const [x, z] = collide(h.point.x, h.point.z, h.point.y);
   player.x = x; player.z = z; player.feet = groundAt(x, z, h.point.y + 0.3) ?? h.point.y; player.vx = player.vz = 0;
   setTop(false);
+}
+renderer.domElement.addEventListener('dblclick', e => teleportAt(e.clientX, e.clientY));
+let lastTap = { t: 0, x: 0, y: 0, start: 0 };
+renderer.domElement.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') lastTap.start = performance.now(); });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (e.pointerType !== 'touch' || mode !== 'top') return;
+  const now = performance.now();
+  if (now - lastTap.start > 250) return;                                    // foi arrasto, não toque
+  if (now - lastTap.t < 350 && Math.hypot(e.clientX - lastTap.x, e.clientY - lastTap.y) < 40) { lastTap.t = 0; teleportAt(e.clientX, e.clientY); }
+  else lastTap = { ...lastTap, t: now, x: e.clientX, y: e.clientY };
 });
 addEventListener('resize', () => {
   renderer.setSize(innerWidth, innerHeight);
@@ -2202,7 +2320,7 @@ addEventListener('resize', () => {
 });
 
 // ---------------------------------------------------------------- estado inicial
-setQuality(2);
+setQuality(TOUCH0 ? 1 : 2);
 applyTime(TIME.cur); TIME.applied = TIME.cur;
 lightsF = sstep(12, -3, TIME.alt);
 applyStyle('mod', false);
@@ -2229,7 +2347,8 @@ function frame() {
   if (r.n !== lastRoom) { lastRoom = r.n; roomName.textContent = r.n; roomArea.textContent = r.a; }
   if (walking()) {
     const d = nearestDoor();
-    if (d) { hint.textContent = `E · ${d.target > 0.5 ? 'fechar' : 'abrir'} ${d.name}`; hint.style.display = 'block'; }
+    if (touchMode) { showDoorAction(d); hint.style.display = 'none'; }
+    else if (d) { hint.textContent = `E · ${d.target > 0.5 ? 'fechar' : 'abrir'} ${d.name}`; hint.style.display = 'block'; }
     else hint.style.display = 'none';
   }
   if (mode === 'fp') { sky.position.copy(camera.position); stepCapture(now); }
@@ -2246,7 +2365,7 @@ function frame() {
   requestAnimationFrame(frame);
 }
 frame();
-window.__tour = { scene, camera, topCam, orbit, labels, player, setTop, applyStyle, applyFacade, setTimeTarget, setQuality, doors, renderer, TIME, Q };
+window.__tour = { scene, camera, topCam, orbit, labels, player, joy, move, setTop, applyStyle, applyFacade, setTimeTarget, setQuality, doors, renderer, TIME, Q };
 </script>
 </body>
 </html>
